@@ -14,7 +14,8 @@ class Radar(object):
         self.display_height = 800
         self.gameDisplay = pygame.display.set_mode((self.display_width, self.display_height))
         pygame.display.set_caption("PiRadar")
-        self.clock = pygame.time.Clock()
+        self.draw_radar()
+        #self.clock = pygame.time.Clock()
 
     def draw_radar(self):
         pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width/2), int(self.display_height/2)), 400, 1)
@@ -45,8 +46,7 @@ class Radar(object):
                     pass
                 pygame.quit()
                 exit()
-        # self.clock.tick(60)
-        # self.distances[i] = 200 * np.sin(a*np.deg2rad(i)/2)
+
         self.gameDisplay.fill((0, 0, 0))
         self.draw_radar()
         self.draw_points(self.distances)
