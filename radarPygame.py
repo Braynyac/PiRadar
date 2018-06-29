@@ -18,12 +18,22 @@ class Radar(object):
         #self.clock = pygame.time.Clock()
 
     def draw_radar(self):
-        pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width/2), int(self.display_height/2)), 400, 1)
-        pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width / 2), int(self.display_height / 2)), 300, 1)
-        pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width / 2), int(self.display_height / 2)), 200, 1)
-        pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width / 2), int(self.display_height / 2)), 100, 1)
+        pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width/2), int(self.display_height/2)), int(self.display_height/2), 1)
+        pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width / 2), int(self.display_height / 2)), int(self.display_height*0.375), 1)
+        pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width / 2), int(self.display_height / 2)), int(self.display_height/4), 1)
+        pygame.draw.circle(self.gameDisplay, self.color_GREEN, (int(self.display_width / 2), int(self.display_height / 2)), int(self.display_height/8), 1)
         pygame.draw.line(self.gameDisplay, self.color_GREEN, (0, int(self.display_height/2)), (int(self.display_width), int(self.display_height/2)))
         pygame.draw.line(self.gameDisplay, self.color_GREEN, (int(self.display_width/2), 0), (int(self.display_width/2), int(self.display_height)))
+
+        font = pygame.font.SysFont("comicsansms", 18)
+        measurements = [font.render("0 cm", True, (0, 255, 0)),
+                        font.render("50 cm", True, (0, 255, 0)),
+                        font.render("100 cm", True, (0, 255, 0)),
+                        font.render("150 cm", True, (0, 255, 0)),
+                        font.render("200 cm", True, (0, 255, 0))]
+        for i in range(len(measurements)):
+            self.gameDisplay.blit(measurements[i], (self.display_width/2 - measurements[i].get_width() + i*self.display_height/8, self.display_height/2))
+
 
     def needle(self, angle, distance):
         x = (self.display_width/2)+2*distance*np.cos(np.deg2rad(angle))
@@ -67,5 +77,4 @@ if __name__ == '__main__':
         d += 1
         for i in range(360):
             radar.update(i, 200*np.sin(d*np.deg2rad(i)))
-            print(radar.angle, radar.distances[i])
             radar.loop()

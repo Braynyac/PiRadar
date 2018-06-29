@@ -57,16 +57,20 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 if __name__ == '__main__':
     while True:
         for i in range(0, 180):
+            t0 = time.time()
             SetAngle(i)
             distance = get_distance()
             print("Angle:", i, "Distance:", distance)
             radar.update(radar.angle, distance)
             radar.loop()
-        for i in range(0,180):
+            print("degrees/second: ", (time.time()-t0)**-1)
+        for i in range(0, 180):
+            t0 = time.time()
             SetAngle(180-i)
             distance = get_distance()
             print("Angle:", i, "Distance:", distance)
             radar.update(radar.angle, distance)
             radar.loop()
+            print("degrees/second: ", (time.time()-t0)**-1)
 
 
