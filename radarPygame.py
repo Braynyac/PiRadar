@@ -8,6 +8,7 @@ class Radar(object):
     def __init__(self):
         self.angle = 0
         self.distances = [0]*360
+        self.points = [0] * 360
         self.color_GREEN = (0, 255, 0)
         self.color_RED = (255, 0, 0)
         self.display_width = 800
@@ -44,7 +45,12 @@ class Radar(object):
         for pnt in range(len(pts)):
             x = (self.display_width / 2) + 2 * pts[pnt] * np.cos(np.deg2rad(pnt))
             y = (self.display_height / 2) - 2 * pts[pnt] * np.sin(np.deg2rad(pnt))
+            self.points[pnt] = [x, y]
             pygame.draw.circle(self.gameDisplay, (255, 0, 0), (int(x), int(y)), 2)
+
+    def connect_pts(self, pts):
+        for pnt in range(len(pts)-1):
+            pygame.draw.line(self.gameDisplay, (255, 0, 0), (pts[pnt][0], pts[pnt][1]), (pts[pnt+1][0], pts[pnt+1][1]))
 
     def loop(self):
         # for i in range(0, 360):
@@ -60,6 +66,7 @@ class Radar(object):
         self.gameDisplay.fill((0, 0, 0))
         self.draw_radar()
         self.draw_points(self.distances)
+        self.connect_pts(self.points)
         self.needle(self.angle, distance=self.distances[self.angle])
 
         pygame.display.update()
