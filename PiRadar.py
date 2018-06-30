@@ -20,7 +20,7 @@ pwm_servo.start(0)
 
 
 def SetAngle(angle):
-    duty = translate(angle, 0, 180, 2,10) 
+    duty = translate(angle, 0, 180, 2, 10)
     #GPIO.output(3, True)
     pwm_servo.ChangeDutyCycle(duty)
     #time.sleep(5)
@@ -32,6 +32,7 @@ def SetAngle(angle):
 
 
 def get_distance():
+    time.sleep(.02)
     GPIO.output(TRIG, False)
     time.sleep(.001)
     GPIO.output(TRIG, True)
