@@ -5,8 +5,9 @@ pygame.init()
 
 
 class Radar(object):
-    def __init__(self):
+    def __init__(self, stSz):
         self.angle = 0
+        self.deg_step = stSz
         self.distances = [0]*360
         self.points = [0] * 360
         self.color_GREEN = (0, 255, 0)
@@ -35,7 +36,6 @@ class Radar(object):
         for i in range(len(measurements)):
             self.gameDisplay.blit(measurements[i], (self.display_width/2 - measurements[i].get_width() + i*self.display_height/8, self.display_height/2))
 
-
     def needle(self, angle, distance):
         x = (self.display_width/2)+2*distance*np.cos(np.deg2rad(angle))
         y = (self.display_height/2) - 2 * distance * np.sin(np.deg2rad(angle))
@@ -49,8 +49,8 @@ class Radar(object):
             pygame.draw.circle(self.gameDisplay, (255, 0, 0), (int(x), int(y)), 2)
 
     def connect_pts(self, pts):
-        for pnt in range(len(pts)-1):
-            pygame.draw.line(self.gameDisplay, (255, 0, 0), (pts[pnt][0], pts[pnt][1]), (pts[pnt+1][0], pts[pnt+1][1]))
+        for pnt in range(int(len(pts)/self.deg_step-self.deg_step)):
+            pygame.draw.line(self.gameDisplay, (255, 0, 0), (pts[pnt*self.deg_step][0], pts[pnt*self.deg_step][1]), (pts[pnt*self.deg_step+self.deg_step][0], pts[pnt*self.deg_step+self.deg_step][1]))
 
     def loop(self):
         # for i in range(0, 360):
@@ -79,9 +79,9 @@ class Radar(object):
 d = 0
 
 if __name__ == '__main__':
-    radar = Radar()
+    radar = Radar(20)
     while True:
         d += 1
-        for i in range(360):
-            radar.update(i, 200*np.sin(d*np.deg2rad(i)))
+        for i in range(int(360/radar.deg_step)):
+            radar.update(i*radar.deg_step, 200*np.sin(d*np.deg2rad(i*radar.deg_step)))
             radar.loop()
