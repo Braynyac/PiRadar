@@ -59,10 +59,8 @@ if __name__ == '__main__':
         t0 = time.time()
         SetAngle(i)
         distance = get_distance()
-        print("Angle:", i, "Distance:", distance)
+        print("Angle:", i, "Distance:", distance, "degrees/second: ", (time.time()-t0)**-1)
         radar.update(radar.angle, distance)
         radar.loop()
-        print("degrees/second: ", (time.time()-t0)**-1)
-
 
 
