@@ -3,7 +3,7 @@ from radarPygame import Radar
 from itertools import cycle
 import time
 GPIO.setwarnings(False)
-radar = Radar()
+radar = Radar(2)
 
 SERVO = 3
 TRIG = 11
@@ -55,7 +55,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 
 
 if __name__ == '__main__':
-    for i in cycle(range(180)+list(reversed(range(180)))):
+    for i in cycle(list(range(181))+list(reversed(range(180)))):
         t0 = time.time()
         SetAngle(i)
         distance = get_distance()

@@ -79,7 +79,7 @@ class Radar(object):
 d = 0
 
 if __name__ == '__main__':
-    radar = Radar(20)
+    radar = Radar(7)
     while True:
         d += 1
         for i in range(int(360/radar.deg_step)):
